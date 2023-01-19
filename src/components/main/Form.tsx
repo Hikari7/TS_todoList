@@ -26,9 +26,8 @@ const Form = () => {
             fontSize: 25,
             color: "#333",
             display: "block",
-
-            "&:hover:": {
-              cursor: "pointer",
+            "&:hover": {
+              opacity: 0.3,
             },
           }}
         />
