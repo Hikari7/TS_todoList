@@ -1,17 +1,17 @@
 import { Button, Container, TextField, unstable_useId } from "@mui/material";
 import React, { useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
+// import AddIcon from "@mui/icons-material/Add";
 
 // const Form = ({ text }: Props) => {
-const Form = (props: { todo: null; setTodo: null }) => {
+const Form = (props: { todos: null; setTodos: null }) => {
   const [value, setValue] = useState("");
-  const [todo, setTodo] = useState<Todo[]>([]);
+  // const [todo, setTodo] = useState<Todo[]>([]);
 
-  type Todo = {
-    value: string;
-    id: number;
-    checked: false;
-  };
+  // type Todo = {
+  //   value: string;
+  //   id: number;
+  //   checked: false;
+  // };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -24,13 +24,13 @@ const Form = (props: { todo: null; setTodo: null }) => {
     console.log(value);
 
     //newTodoはTodoの型と合わせることを記述
-    const newTodo: Todo = {
-      value: value,
-      id: Date.now(),
-      checked: false,
-    };
+    // const newTodo: Todo = {
+    //   value: value,
+    //   id: Date.now(),
+    //   checked: false,
+    // };
 
-    setTodo([newTodo, ...todo]);
+    // setTodo([newTodo, ...todo]);
     // setTodo("");
   };
 

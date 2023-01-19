@@ -1,11 +1,27 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Layout from "./Layout/Layout";
-import Form from "./components/main/Form";
-import Todos from "./components/main/Todos";
 import { Toolbar, Typography } from "@mui/material";
+import Todos from "./components/main/Todos";
+
+interface TodoState {
+  todos: {
+    value: string;
+    id: number;
+    checked: false;
+  }[];
+  //↑配列になるので[]も書いておく
+}
 
 function App() {
+  //もし配列の中が空だったらTSは型のタイプがわからないので<TodoState>で予め型を宣言しておく
+  //stateをtypeと一緒に宣言したよ
+  const [todos, setTodos] = useState<TodoState["todos"]>([]);
+
+  // todos.map((todo) => {
+  //   todo.value
+  // });
+
   return (
     <>
       <Layout>
@@ -14,8 +30,9 @@ function App() {
             My Tasks
           </Typography>
         </Toolbar>
-        <Form todo={null} setTodo={null} />
-        <Todos todo={null} setTodo={null} />
+        {/* 子に渡す */}
+        {/* <Form todo={null} setTodo={null} /> */}
+        <Todos todos={todos} />
       </Layout>
     </>
   );

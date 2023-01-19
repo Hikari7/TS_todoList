@@ -2,17 +2,19 @@ import { Box, Container, Typography } from "@mui/material";
 import React from "react";
 import Form from "./Form";
 
-type Todo = {
-  value: string;
-  id: number;
-  checked: false;
-};
+//受け取るpropsもtype宣言する
+interface TodoProps {
+  todos: {
+    value: string;
+    id: number;
+    checked: false;
+  }[];
+  //↑配列になるので[]も書いておく
+}
 
-type Props = {
-  todo: Todo;
-};
-
-const Todos = (props: { todo: null; setTodo: null }) => {
+// const Todos = (props: { todo: null; setTodo: null }) => {
+//親からpropsを受け取る
+const Todos = ({ todos }: TodoProps): JSX.Element => {
   // console.log(todo);
 
   return (
@@ -33,7 +35,11 @@ const Todos = (props: { todo: null; setTodo: null }) => {
             borderRadius: 3,
           }}
         >
-          <Typography>{/* <ul>{setTodo}</ul> */}</Typography>
+          <Typography>
+            {" "}
+            <ul>{todos.value}</ul>
+            {/* ✅どうやってレンダリングするのか考える */}
+          </Typography>
         </Box>
       </Container>
     </>
