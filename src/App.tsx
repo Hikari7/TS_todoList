@@ -14,8 +14,8 @@ function App() {
             My Tasks
           </Typography>
         </Toolbar>
-        <Form text={""} />
-        <Todos text={""} />
+        <Form todo={null} setTodo={null} />
+        <Todos todo={null} setTodo={null} />
       </Layout>
     </>
   );

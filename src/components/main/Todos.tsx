@@ -1,11 +1,20 @@
 import { Box, Container, Typography } from "@mui/material";
 import React from "react";
+import Form from "./Form";
 
-type Props = {
-  text: String;
+type Todo = {
+  value: string;
+  id: number;
+  checked: false;
 };
 
-const Todos = ({ text }: Props) => {
+type Props = {
+  todo: Todo;
+};
+
+const Todos = (props: { todo: null; setTodo: null }) => {
+  // console.log(todo);
+
   return (
     <>
       <Container
@@ -20,12 +29,11 @@ const Todos = ({ text }: Props) => {
           sx={{
             minWidth: "100%",
             minHeight: 300,
-            backgroundColor: "#FFFFE8",
+            backgroundColor: "#C4DFAA",
+            borderRadius: 3,
           }}
         >
-          <Typography>
-            <ul>{text}</ul>
-          </Typography>
+          <Typography>{/* <ul>{setTodo}</ul> */}</Typography>
         </Box>
       </Container>
     </>

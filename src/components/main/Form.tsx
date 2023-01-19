@@ -2,12 +2,8 @@ import { Button, Container, TextField, unstable_useId } from "@mui/material";
 import React, { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 
-// type Props = {
-//   text: string;
-// };
-
 // const Form = ({ text }: Props) => {
-const Form = (props: { text: string }) => {
+const Form = (props: { todo: null; setTodo: null }) => {
   const [value, setValue] = useState("");
   const [todo, setTodo] = useState<Todo[]>([]);
 
