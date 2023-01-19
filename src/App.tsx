@@ -5,7 +5,6 @@ import Form from "./components/main/Form";
 import Todos from "./components/main/Todos";
 import { Toolbar, Typography } from "@mui/material";
 
-
 function App() {
   return (
     <>
@@ -15,8 +14,8 @@ function App() {
             My Tasks
           </Typography>
         </Toolbar>
-        <Form />
-        <Todos />
+        <Form text={""} />
+        <Todos text={""} />
       </Layout>
     </>
   );

@@ -1,7 +1,11 @@
 import { Box, Container, Typography } from "@mui/material";
 import React from "react";
 
-const Todos = () => {
+type Props = {
+  text: String;
+};
+
+const Todos = ({ text }: Props) => {
   return (
     <>
       <Container
@@ -20,13 +24,7 @@ const Todos = () => {
           }}
         >
           <Typography>
-            <ul>
-              <li>asd</li>
-              <li>asd</li>
-              <li>asd</li>
-              <li>asd</li>
-              <li>asd</li>
-            </ul>
+            <ul>{text}</ul>
           </Typography>
         </Box>
       </Container>
