@@ -11,7 +11,7 @@ export interface TodoState {
   todos: {
     value: string;
     id: number;
-    checked: false;
+    checked: boolean;
   }[];
   //↑配列になるので[]も書いておく
 
@@ -19,7 +19,7 @@ export interface TodoState {
   todo: {
     value: string;
     id: number;
-    checked: false;
+    checked: boolean;
   };
 }
 

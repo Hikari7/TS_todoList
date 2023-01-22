@@ -28,16 +28,28 @@ interface ThemeOptions {
 
 const Todos = ({ todos, handleSetTodos }: Props) => {
   const [checked, setChecked] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   const handleDelete = (id: number) => {
     const newTodos = todos.filter((todo) => todo.id !== id);
     handleSetTodos(newTodos);
   };
 
-  const handleChecked = (id: number) => {
-    console.log("hceasdasd");
-    setChecked(!checked);
+  const handleChecked = (id: number, checked: boolean) => {
+    //checkのtoggleはできてる
+    const checkedTodo = todos.find((todo) => todo.id === id);
+    console.log(checkedTodo);
+    if (checkedTodo) {
+      setChecked((checkedTodo.checked = !checked));
+    }
   };
+
+  //newTodosにエラーが吐かれてしまう(newTodosはvoid, todoは型指定をしていたため)
+  // setTodos(newTodos);
+
+  // const handleEdit = (id: number) => {
+  //   setEdit(!edit);
+  // };
 
   return (
     <>
@@ -71,8 +83,17 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
                       display: "table",
                     }}
                   >
-                    <Checkbox onClick={() => handleChecked(todo.id)} />
+                    <Checkbox
+                      onChange={() => handleChecked(todo.id, todo.checked)}
+                    />
+
                     {checked ? (
+                      <span className="checked">{todo.value}</span>
+                    ) : (
+                      <span>{todo.value}</span>
+                    )}
+
+                    {/* {checked ? (
                       <Typography
                         sx={{
                           width: "100%",
@@ -97,7 +118,7 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
                       >
                         {todo.value}
                       </Typography>
-                    )}
+                    )} */}
                   </Box>
                   <Box sx={{ display: "inline-flex" }}>
                     <Button
@@ -114,6 +135,7 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
                       color="warning"
                       variant="outlined"
                       sx={{ marginRight: 1, marginTop: 1 }}
+                      // onClick={() => handleEdit(todo.id)}
                     >
                       Edit
                     </Button>
@@ -130,6 +152,9 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
 
 export default Todos;
 
+function setTodos(newTodos: { value: string; id: number; checked: boolean }[]) {
+  throw new Error("Function not implemented.");
+}
 //受け取るpropsもtype宣言する
 // interface TodoProps {
 //   todos: {
