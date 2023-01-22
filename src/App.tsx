@@ -24,11 +24,11 @@ export interface TodoState {
 }
 
 //こんな書き方もある
-interface TestTypeObj {
-  value: string;
-  id: number;
-  checked: boolean;
-}
+// interface TestTypeObj {
+//   value: string;
+//   id: number;
+//   checked: boolean;
+// }
 // interface TestTypeArr {
 //   todos:TestTypeObj[],
 //   todos2:Array<TestTypeObj>

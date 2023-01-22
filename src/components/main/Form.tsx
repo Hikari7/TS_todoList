@@ -9,7 +9,6 @@ interface TodoProps {
   handleSetTodos: (updatedTodos: TodoState["todos"]) => void;
 }
 
-// const Form = ({ text }: TodoState) => {
 const Form = ({ todos, handleSetTodos }: TodoProps) => {
   const [value, setValue] = useState("");
 
@@ -18,6 +17,7 @@ const Form = ({ todos, handleSetTodos }: TodoProps) => {
   ) => {
     setValue(e.currentTarget.value);
   };
+  console.log(handleSetTodos);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

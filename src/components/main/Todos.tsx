@@ -1,14 +1,27 @@
 import { Box, Button, Container, Checkbox, Typography } from "@mui/material";
 import { TodoState } from "../../App";
 import React, { useState } from "react";
+import EditForm from "./EditForm";
 
 interface Props {
   todos: TodoState["todos"];
   handleSetTodos: (updatedTodos: TodoState["todos"]) => void;
 }
-interface ThemeOptions {
-  status: {
-    danger: React.CSSProperties["color"];
+
+export interface CurrentTodoState {
+  //配列のtodo
+  todos: {
+    value: string;
+    id: number;
+    checked: boolean;
+  }[];
+  //↑配列になるので[]も書いておく
+
+  //単体のtodo
+  todo: {
+    value: string;
+    id: number;
+    checked: boolean;
   };
 }
 // interface TodoObj {
@@ -26,9 +39,18 @@ interface ThemeOptions {
 // const Todos = (props: { todo: null; setTodo: null }) => {
 //親からpropsを受け取る
 
+// interface TestTypeArr {
+//   todos:TestTypeObj[],
+//   todos2:Array<TestTypeObj>
+// }
+
+// interface EditState {
+//   isEditing: boolean;
+// }
+
 const Todos = ({ todos, handleSetTodos }: Props) => {
   const [checked, setChecked] = useState(false);
-  const [edit, setEdit] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleDelete = (id: number) => {
     const newTodos = todos.filter((todo) => todo.id !== id);
@@ -47,9 +69,9 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
   //newTodosにエラーが吐かれてしまう(newTodosはvoid, todoは型指定をしていたため)
   // setTodos(newTodos);
 
-  // const handleEdit = (id: number) => {
-  //   setEdit(!edit);
-  // };
+  const handleDeleteAll = () => {
+    handleSetTodos([]);
+  };
 
   return (
     <>
@@ -65,7 +87,7 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
           sx={{
             minWidth: "100%",
             minHeight: 300,
-            backgroundColor: "#C4DFAA",
+            backgroundColor: "#a8dadc",
             borderRadius: 3,
           }}
         >
@@ -93,8 +115,7 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
                       <span>{todo.value}</span>
                     )}
 
-                    {/* {checked ? (
-                      <Typography
+                    {/* <Typography
                         sx={{
                           width: "100%",
                           verticalAlign: "middle",
@@ -105,20 +126,7 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
                         key={todo.id}
                       >
                         {todo.value}
-                      </Typography>
-                    ) : (
-                      <Typography
-                        sx={{
-                          width: "100%",
-                          verticalAlign: "middle",
-                          display: "table-cell",
-                          marginLef: 2,
-                        }}
-                        key={todo.id}
-                      >
-                        {todo.value}
-                      </Typography>
-                    )} */}
+                      </Typography> */}
                   </Box>
                   <Box sx={{ display: "inline-flex" }}>
                     <Button
@@ -135,10 +143,20 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
                       color="warning"
                       variant="outlined"
                       sx={{ marginRight: 1, marginTop: 1 }}
-                      // onClick={() => handleEdit(todo.id)}
+                      onClick={() => setIsEditing(!isEditing)}
                     >
                       Edit
                     </Button>
+                    <>
+                      {isEditing && (
+                        <EditForm
+                          setIsEditing={setIsEditing}
+                          isEditing={isEditing}
+                          todos={todos}
+                          handleSetTodos={handleSetTodos}
+                        />
+                      )}
+                    </>
                   </Box>
                 </Box>
               );
@@ -146,6 +164,17 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
           </ul>
         </Box>
       </Container>
+      <Button
+        variant="contained"
+        sx={{
+          display: "block",
+          margin: "auto",
+          marginTop: 3,
+        }}
+        onClick={handleDeleteAll}
+      >
+        Delete all
+      </Button>
     </>
   );
 };
@@ -155,12 +184,3 @@ export default Todos;
 function setTodos(newTodos: { value: string; id: number; checked: boolean }[]) {
   throw new Error("Function not implemented.");
 }
-//受け取るpropsもtype宣言する
-// interface TodoProps {
-//   todos: {
-//     value: string;
-//     id: number;
-//     checked: false;
-//   }[];
-//   //↑配列になるので[]も書いておく
-// }
