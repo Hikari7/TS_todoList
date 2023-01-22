@@ -59,7 +59,8 @@ function App() {
           </Typography>
         </Toolbar>
         {/* handleSetTodos(setTodos:更新された最新のtodos)を子に渡して更新できるようにする */}
-        <Form todos={todos} handleSetTodos={handleSetTodos} />
+        {/* handleSetTodos */}
+        <Form todos={todos} handleSetTodos={handleSetTodos}/>
         <Todos todos={todos} />
       </Layout>
     </>
@@ -68,20 +69,3 @@ function App() {
 
 export default App;
 
-// const [todo, setTodo] = useState<Todo[]>([]);
-
-// type Todo = {
-//   value: string;
-//   id: number;
-//   checked: false;
-// };
-
-//newTodoはTodoの型と合わせることを記述
-// const newTodo: Todo = {
-//   value: value,
-//   id: Date.now(),
-//   checked: false,
-// };
-
-// setTodo([newTodo, ...todo]);
-// setTodo("");

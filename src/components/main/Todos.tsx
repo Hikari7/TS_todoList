@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { TodoState } from "../../App";
 
 interface Props {
@@ -41,9 +41,31 @@ const Todos = ({ todos }: Props) => {
             borderRadius: 3,
           }}
         >
-          {todos?.map((todo: TodoState["todo"]) => {
-            return <div key={todo.id}>{todo.value}</div>;
-          })}
+          <ul>
+            {todos?.map((todo: TodoState["todo"]) => {
+              return (
+                <Box sx={{ display: "flex" }}>
+                  <Box sx={{ width: "80%", backgroundColor: "", marginTop: 1 }}>
+                    <Typography key={todo.id}>{todo.value}</Typography>
+                  </Box>
+                  <Box sx={{ display: "inline-flex" }}>
+                    <Button
+                      variant="outlined"
+                      sx={{ marginRight: 1, marginTop: 1 }}
+                    >
+                      Delete
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      sx={{ marginRight: 1, marginTop: 1 }}
+                    >
+                      Edit
+                    </Button>
+                  </Box>
+                </Box>
+              );
+            })}
+          </ul>
         </Box>
       </Container>
     </>

@@ -30,7 +30,9 @@ const Form = ({ todos, handleSetTodos }: TodoProps) => {
       checked: false,
     };
 
+    //スプレッド構文で今持っている状態を持ってる
     handleSetTodos([...todos, newTodo]);
+    setValue("");
     console.log(todos);
   };
 
