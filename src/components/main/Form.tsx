@@ -1,17 +1,17 @@
 import { Button, Container, TextField, unstable_useId } from "@mui/material";
 import React, { useState } from "react";
+import { TodoState } from "../../App";
 // import AddIcon from "@mui/icons-material/Add";
 
-// const Form = ({ text }: Props) => {
-const Form = (props: { todos: null; setTodos: null }) => {
-  const [value, setValue] = useState("");
-  // const [todo, setTodo] = useState<Todo[]>([]);
+//受け取るpropsにも型を宣言
+interface TodoProps {
+  todos: TodoState["todos"];
+  handleSetTodos: (updatedTodos: TodoState["todos"]) => void;
+}
 
-  // type Todo = {
-  //   value: string;
-  //   id: number;
-  //   checked: false;
-  // };
+// const Form = ({ text }: TodoState) => {
+const Form = ({ todos, handleSetTodos }: TodoProps) => {
+  const [value, setValue] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -21,17 +21,17 @@ const Form = (props: { todos: null; setTodos: null }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(value);
+    //ここでhandleSetTodosの値を更新する
+    // console.log(value); valueは取れてる
+    //オブジェクトなので""で何のtypeか判断
+    const newTodo: TodoState["todo"] = {
+      value: value,
+      id: Date.now(),
+      checked: false,
+    };
 
-    //newTodoはTodoの型と合わせることを記述
-    // const newTodo: Todo = {
-    //   value: value,
-    //   id: Date.now(),
-    //   checked: false,
-    // };
-
-    // setTodo([newTodo, ...todo]);
-    // setTodo("");
+    handleSetTodos([...todos, newTodo]);
+    console.log(todos);
   };
 
   return (
@@ -65,18 +65,3 @@ const Form = (props: { todos: null; setTodos: null }) => {
 };
 
 export default Form;
-
-{
-  /* <AddIcon
-            name="details"
-            onSubmit={handleSubmit("detail")}
-            sx={{
-              fontSize: 25,
-              color: "#333",
-              display: "block",
-              "&:hover": {
-                opacity: 0.3,
-              },
-            }}
-          /> */
-}

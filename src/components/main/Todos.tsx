@@ -1,21 +1,27 @@
 import { Box, Container, Typography } from "@mui/material";
-import React from "react";
-import Form from "./Form";
+import { TodoState } from "../../App";
 
-//受け取るpropsもtype宣言する
-interface TodoProps {
-  todos: {
-    value: string;
-    id: number;
-    checked: false;
-  }[];
-  //↑配列になるので[]も書いておく
+interface Props {
+  todos: TodoState["todos"];
 }
+
+// interface TodoObj {
+//   todos: {
+//     value: string;
+//     id: number;
+//     checked: false;
+//   }[];
+// }
+
+// interface TodoArr {
+//   todos: TodoObj[];
+// }
 
 // const Todos = (props: { todo: null; setTodo: null }) => {
 //親からpropsを受け取る
-const Todos = ({ todos }: TodoProps): JSX.Element => {
-  // console.log(todo);
+const Todos = ({ todos }: Props) => {
+  // const Todos = ({ todos }: TodoArr) => {
+  console.log(todos);
 
   return (
     <>
@@ -35,11 +41,9 @@ const Todos = ({ todos }: TodoProps): JSX.Element => {
             borderRadius: 3,
           }}
         >
-          <Typography>
-            {" "}
-            <ul>{todos.value}</ul>
-            {/* ✅どうやってレンダリングするのか考える */}
-          </Typography>
+          {todos?.map((todo: TodoState["todo"]) => {
+            return <div key={todo.id}>{todo.value}</div>;
+          })}
         </Box>
       </Container>
     </>
@@ -47,3 +51,13 @@ const Todos = ({ todos }: TodoProps): JSX.Element => {
 };
 
 export default Todos;
+
+//受け取るpropsもtype宣言する
+// interface TodoProps {
+//   todos: {
+//     value: string;
+//     id: number;
+//     checked: false;
+//   }[];
+//   //↑配列になるので[]も書いておく
+// }
