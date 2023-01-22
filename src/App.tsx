@@ -60,12 +60,11 @@ function App() {
         </Toolbar>
         {/* handleSetTodos(setTodos:更新された最新のtodos)を子に渡して更新できるようにする */}
         {/* handleSetTodos */}
-        <Form todos={todos} handleSetTodos={handleSetTodos}/>
-        <Todos todos={todos} />
+        <Form todos={todos} handleSetTodos={handleSetTodos} />
+        <Todos todos={todos} handleSetTodos={handleSetTodos} />
       </Layout>
     </>
   );
 }
 
 export default App;
-

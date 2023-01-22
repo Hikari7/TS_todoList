@@ -1,10 +1,16 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, Checkbox, Typography } from "@mui/material";
 import { TodoState } from "../../App";
+import React, { useState } from "react";
 
 interface Props {
   todos: TodoState["todos"];
+  handleSetTodos: (updatedTodos: TodoState["todos"]) => void;
 }
-
+interface ThemeOptions {
+  status: {
+    danger: React.CSSProperties["color"];
+  };
+}
 // interface TodoObj {
 //   todos: {
 //     value: string;
@@ -19,9 +25,19 @@ interface Props {
 
 // const Todos = (props: { todo: null; setTodo: null }) => {
 //親からpropsを受け取る
-const Todos = ({ todos }: Props) => {
-  // const Todos = ({ todos }: TodoArr) => {
-  console.log(todos);
+
+const Todos = ({ todos, handleSetTodos }: Props) => {
+  const [checked, setChecked] = useState(false);
+
+  const handleDelete = (id: number) => {
+    const newTodos = todos.filter((todo) => todo.id !== id);
+    handleSetTodos(newTodos);
+  };
+
+  const handleChecked = (id: number) => {
+    console.log("hceasdasd");
+    setChecked(!checked);
+  };
 
   return (
     <>
@@ -45,17 +61,57 @@ const Todos = ({ todos }: Props) => {
             {todos?.map((todo: TodoState["todo"]) => {
               return (
                 <Box sx={{ display: "flex" }}>
-                  <Box sx={{ width: "80%", backgroundColor: "", marginTop: 1 }}>
-                    <Typography key={todo.id}>{todo.value}</Typography>
+                  <Box
+                    sx={{
+                      width: "80%",
+                      backgroundColor: "#fffafabd",
+                      marginTop: 1,
+                      marginRight: 1,
+                      borderRadius: 1,
+                      display: "table",
+                    }}
+                  >
+                    <Checkbox onClick={() => handleChecked(todo.id)} />
+                    {checked ? (
+                      <Typography
+                        sx={{
+                          width: "100%",
+                          verticalAlign: "middle",
+                          display: "table-cell",
+                          marginLef: 2,
+                          textDecoration: "line-through",
+                        }}
+                        key={todo.id}
+                      >
+                        {todo.value}
+                      </Typography>
+                    ) : (
+                      <Typography
+                        sx={{
+                          width: "100%",
+                          verticalAlign: "middle",
+                          display: "table-cell",
+                          marginLef: 2,
+                        }}
+                        key={todo.id}
+                      >
+                        {todo.value}
+                      </Typography>
+                    )}
                   </Box>
                   <Box sx={{ display: "inline-flex" }}>
                     <Button
+                      onClick={() => handleDelete(todo.id)}
                       variant="outlined"
-                      sx={{ marginRight: 1, marginTop: 1 }}
+                      sx={{
+                        marginRight: 1,
+                        marginTop: 1,
+                      }}
                     >
                       Delete
                     </Button>
                     <Button
+                      color="warning"
                       variant="outlined"
                       sx={{ marginRight: 1, marginTop: 1 }}
                     >
