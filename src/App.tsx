@@ -6,6 +6,7 @@ import Todos from "./components/main/Todos";
 import Form from "./components/main/Form";
 
 //型を書いて別のコンポーネントにexportすることも可能
+//オブジェクトにすることでまとめて書くことができる
 export interface TodoState {
   //配列のtodo
   todos: {
@@ -46,10 +47,6 @@ function App() {
   };
   console.log(todos);
 
-  // todos.map((todo) => {
-  //   console.log(todo);
-  // });
-
   return (
     <>
       <Layout>
@@ -59,7 +56,7 @@ function App() {
           </Typography>
         </Toolbar>
         {/* handleSetTodos(setTodos:更新された最新のtodos)を子に渡して更新できるようにする */}
-        {/* handleSetTodos */}
+        {/* FotmでhandleSetTodosを更新、todosでもそのまま更新されるからそれを使っていく */}
         <Form todos={todos} handleSetTodos={handleSetTodos} />
         <Todos todos={todos} handleSetTodos={handleSetTodos} />
       </Layout>

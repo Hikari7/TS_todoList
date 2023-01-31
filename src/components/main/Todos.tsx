@@ -1,13 +1,22 @@
-import { Box, Button, Container, Checkbox, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Checkbox,
+  FormGroup,
+  FormControlLabel,
+} from "@mui/material";
 import { TodoState } from "../../App";
 import React, { useState } from "react";
 import EditForm from "./EditForm";
 
+//受け取るpropsをまとめる
 interface Props {
   todos: TodoState["todos"];
   handleSetTodos: (updatedTodos: TodoState["todos"]) => void;
 }
 
+//edit用
 export interface CurrentTodoState {
   //配列のtodo
   todos: {
@@ -24,17 +33,6 @@ export interface CurrentTodoState {
     checked: boolean;
   };
 }
-// interface TodoObj {
-//   todos: {
-//     value: string;
-//     id: number;
-//     checked: false;
-//   }[];
-// }
-
-// interface TodoArr {
-//   todos: TodoObj[];
-// }
 
 // const Todos = (props: { todo: null; setTodo: null }) => {
 //親からpropsを受け取る
@@ -59,15 +57,27 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
 
   const handleChecked = (id: number, checked: boolean) => {
     //checkのtoggleはできてる
-    const checkedTodo = todos.find((todo) => todo.id === id);
-    console.log(checkedTodo);
-    if (checkedTodo) {
-      setChecked((checkedTodo.checked = !checked));
-    }
+    // const checkedTodo = todos.find((todo) => todo.id === id);
+    // console.log(checkedTodo);
+    // if (checkedTodo) {
+    //   setChecked((checkedTodo.checked = !checked));
+    // }
+
+    const newTodo = todos.map((todo) => {
+      if (todo.id === id) {
+        console.log(todo.id);
+        console.log(id);
+
+        //toggle is working
+        setChecked((todo.checked = !checked));
+      }
+      console.log(todo);
+      return todo;
+    });
+    handleSetTodos(newTodo);
   };
 
   //newTodosにエラーが吐かれてしまう(newTodosはvoid, todoは型指定をしていたため)
-  // setTodos(newTodos);
 
   const handleDeleteAll = () => {
     handleSetTodos([]);
@@ -94,7 +104,7 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
           <ul>
             {todos?.map((todo: TodoState["todo"]) => {
               return (
-                <Box sx={{ display: "flex" }}>
+                <Box sx={{ display: "flex" }} key={todo.id}>
                   <Box
                     sx={{
                       width: "80%",
@@ -105,6 +115,7 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
                       display: "table",
                     }}
                   >
+                    {/* mapされてない？ */}
                     <Checkbox
                       onChange={() => handleChecked(todo.id, todo.checked)}
                     />
@@ -115,18 +126,21 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
                       <span>{todo.value}</span>
                     )}
 
-                    {/* <Typography
-                        sx={{
-                          width: "100%",
-                          verticalAlign: "middle",
-                          display: "table-cell",
-                          marginLef: 2,
-                          textDecoration: "line-through",
-                        }}
-                        key={todo.id}
-                      >
-                        {todo.value}
-                      </Typography> */}
+                    {/* <FormGroup>
+                      {checked ? (
+                        <FormControlLabel
+                          onChange={() => handleChecked(todo.id, todo.checked)}
+                          control={<Checkbox disabled checked />}
+                          label={todo.value}
+                        />
+                      ) : (
+                        <FormControlLabel
+                          onChange={() => handleChecked(todo.id, todo.checked)}
+                          control={<Checkbox />}
+                          label={todo.value}
+                        />
+                      )}
+                    </FormGroup> */}
                   </Box>
                   <Box sx={{ display: "inline-flex" }}>
                     <Button
@@ -152,8 +166,10 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
                         <EditForm
                           setIsEditing={setIsEditing}
                           isEditing={isEditing}
-                          todos={todos}
+                          // todos={todos}
                           handleSetTodos={handleSetTodos}
+                          todos={[]}
+                          todo={todo}
                         />
                       )}
                     </>
@@ -181,6 +197,6 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
 
 export default Todos;
 
-function setTodos(newTodos: { value: string; id: number; checked: boolean }[]) {
-  throw new Error("Function not implemented.");
-}
+// function setTodos(newTodos: { value: string; id: number; checked: boolean }[]) {
+//   throw new Error("Function not implemented.");
+// }

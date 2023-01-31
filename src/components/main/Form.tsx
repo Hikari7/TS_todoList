@@ -1,14 +1,14 @@
-import { Button, Container, TextField, unstable_useId } from "@mui/material";
+import { Button, Container, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { TodoState } from "../../App";
-// import AddIcon from "@mui/icons-material/Add";
 
-//受け取るpropsにも型を宣言
+//受け取るpropsにも型を宣言(TodoStateの型を受け取ってる)
 interface TodoProps {
   todos: TodoState["todos"];
   handleSetTodos: (updatedTodos: TodoState["todos"]) => void;
 }
 
+//受け取るpropsの名前を:の後にちゃんと書いて宣言
 const Form = ({ todos, handleSetTodos }: TodoProps) => {
   const [value, setValue] = useState("");
 
@@ -17,7 +17,6 @@ const Form = ({ todos, handleSetTodos }: TodoProps) => {
   ) => {
     setValue(e.currentTarget.value);
   };
-  console.log(handleSetTodos);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,10 +29,11 @@ const Form = ({ todos, handleSetTodos }: TodoProps) => {
       checked: false,
     };
 
+    //更新用のsetTodos
     //スプレッド構文で今持っている状態を持ってる
     handleSetTodos([...todos, newTodo]);
     setValue("");
-    console.log(todos);
+    // console.log(todos);
   };
 
   return (

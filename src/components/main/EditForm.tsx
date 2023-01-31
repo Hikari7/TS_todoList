@@ -26,12 +26,14 @@ type Props = {
   handleSetTodos: (updatedTodos: CurrentTodoState["todos"]) => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
+  todo: CurrentTodoState["todo"];
 };
 
 export default function BasicModal({
   setIsEditing,
   isEditing,
   todos,
+  todo,
   handleSetTodos,
 }: Props) {
   const [value, setValue] = useState("");
@@ -40,6 +42,7 @@ export default function BasicModal({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setValue(e.currentTarget.value);
+    console.log(setValue);
   };
 
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -52,8 +55,13 @@ export default function BasicModal({
       checked: false,
     };
 
-    //けど全部更新されちゃうかなしみ
-    handleSetTodos([newTodo]);
+    console.log(newTodo.value);
+    console.log(todo);
+
+    //newtodoのidじゃなくてeditモードになっているidと一致させたい
+    // if (todo.id === id) {
+      // }
+      return (todo.value = newTodo.value);
   };
 
   return (
@@ -75,7 +83,6 @@ export default function BasicModal({
               fullWidth
               value={value}
               onChange={handleChange}
-              sx={{ fontSize: 40, color: "pink", marginTop: 2 }}
             />
             <Button variant="contained" type="submit" sx={{ marginTop: 2 }}>
               Add
