@@ -7,77 +7,54 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { TodoState } from "../../App";
-import React, { useState } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import EditForm from "./EditForm";
 
 //受け取るpropsをまとめる
+// interface Props {
+//   todos: TodoState["todos"];
+//   handleSetTodos: (updatedTodos: TodoState["todos"]) => void;
+// }
 interface Props {
   todos: TodoState["todos"];
   handleSetTodos: (updatedTodos: TodoState["todos"]) => void;
 }
 
+type TodoType = {
+  value: string;
+  id: number;
+  checked: boolean;
+};
+
 //edit用
 export interface CurrentTodoState {
   //配列のtodo
-  todos: {
-    value: string;
-    id: number;
-    checked: boolean;
-  }[];
+  todos: TodoType[];
   //↑配列になるので[]も書いておく
 
   //単体のtodo
-  todo: {
-    value: string;
-    id: number;
-    checked: boolean;
-  };
+  todo: TodoType;
 }
-
-// const Todos = (props: { todo: null; setTodo: null }) => {
-//親からpropsを受け取る
-
-// interface TestTypeArr {
-//   todos:TestTypeObj[],
-//   todos2:Array<TestTypeObj>
-// }
-
-// interface EditState {
-//   isEditing: boolean;
-// }
 
 const Todos = ({ todos, handleSetTodos }: Props) => {
   const [checked, setChecked] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleDelete = (id: number) => {
-    const newTodos = todos.filter((todo) => todo.id !== id);
+    const newTodos = todos.filter((todo: TodoType) => todo.id !== id);
     handleSetTodos(newTodos);
   };
 
   const handleChecked = (id: number, checked: boolean) => {
-    //checkのtoggleはできてる
-    // const checkedTodo = todos.find((todo) => todo.id === id);
-    // console.log(checkedTodo);
-    // if (checkedTodo) {
-    //   setChecked((checkedTodo.checked = !checked));
-    // }
-
-    const newTodo = todos.map((todo) => {
-      if (todo.id === id) {
-        console.log(todo.id);
-        console.log(id);
-
-        //toggle is working
-        setChecked((todo.checked = !checked));
+    const updatedTodos = todos.map((item: TodoType) => {
+      if (item.id === id) {
+        item.checked = !item.checked;
       }
-      console.log(todo);
-      return todo;
+      return item;
     });
-    handleSetTodos(newTodo);
-  };
 
-  //newTodosにエラーが吐かれてしまう(newTodosはvoid, todoは型指定をしていたため)
+    handleSetTodos(updatedTodos);
+  };
 
   const handleDeleteAll = () => {
     handleSetTodos([]);
@@ -115,12 +92,11 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
                       display: "table",
                     }}
                   >
-                    {/* mapされてない？ */}
                     <Checkbox
                       onChange={() => handleChecked(todo.id, todo.checked)}
                     />
 
-                    {checked ? (
+                    {todo.checked ? (
                       <span className="checked">{todo.value}</span>
                     ) : (
                       <span>{todo.value}</span>
@@ -199,4 +175,16 @@ export default Todos;
 
 // function setTodos(newTodos: { value: string; id: number; checked: boolean }[]) {
 //   throw new Error("Function not implemented.");
+// }
+
+// const Todos = (props: { todo: null; setTodo: null }) => {
+//親からpropsを受け取る
+
+// interface TestTypeArr {
+//   todos:TestTypeObj[],
+//   todos2:Array<TestTypeObj>
+// }
+
+// interface EditState {
+//   isEditing: boolean;
 // }
