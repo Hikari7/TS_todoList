@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { CurrentTodoState } from "../main/Todos";
+import Todos, { CurrentTodoState } from "../main/Todos";
 import { TextField } from "@mui/material";
 
 const style = {
@@ -29,6 +29,12 @@ type Props = {
   todo: CurrentTodoState["todo"];
 };
 
+type TodoType = {
+  value: string;
+  id: number;
+  checked: boolean;
+};
+
 export default function BasicModal({
   setIsEditing,
   isEditing,
@@ -37,6 +43,8 @@ export default function BasicModal({
   handleSetTodos,
 }: Props) {
   const [value, setValue] = useState("");
+
+  console.log("todo.id", todo.id);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -49,20 +57,44 @@ export default function BasicModal({
     e.preventDefault();
     setIsEditing(false);
 
-    const newTodo = {
-      value: value,
-      id: Date.now(),
-      checked: false,
-    };
+    const newEditedTodos = todos.map((todoItem) => {
+      if (todoItem.id === todo.id) {
+        todoItem.value = value;
+      }
 
-    console.log(newTodo.value);
-    console.log(todo);
+      return todoItem;
+    });
 
-    //newtodoのidじゃなくてeditモードになっているidと一致させたい
-    // if (todo.id === id) {
-      // }
-      return (todo.value = newTodo.value);
+    handleSetTodos(newEditedTodos);
+
+    // if (todo.id) {
+    //   const newTodo: TodoState["todo"] = {
+    //     value: value,
+    //     id: Date.now(),
+    //     checked: false,
+    //   };
+    //   handleSetTodos(newTodo);
+    // }
+
+    // const newTodo = {
+    //   value: value,
+    //   id: Date.now(),
+    //   checked: false,
+    // };
+
+    // console.log(newTodo.value);
+    // console.log(todo);
+
+    // todo.value = newTodo.value;
   };
+
+  // const editedTodos: any = todos.map((item: TodoType) => {
+  // return (todo.value = item.value);
+  // if (item.id === id) {
+  //   console.log(item.value);
+
+  //   item.value = value;
+  // }
 
   return (
     <div>

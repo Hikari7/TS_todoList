@@ -37,7 +37,6 @@ export interface CurrentTodoState {
 }
 
 const Todos = ({ todos, handleSetTodos }: Props) => {
-  const [checked, setChecked] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleDelete = (id: number) => {
@@ -59,6 +58,9 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
   const handleDeleteAll = () => {
     handleSetTodos([]);
   };
+
+  //もしeditボタンがcurrentIdとマッチしたら、
+  
 
   return (
     <>
@@ -101,22 +103,6 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
                     ) : (
                       <span>{todo.value}</span>
                     )}
-
-                    {/* <FormGroup>
-                      {checked ? (
-                        <FormControlLabel
-                          onChange={() => handleChecked(todo.id, todo.checked)}
-                          control={<Checkbox disabled checked />}
-                          label={todo.value}
-                        />
-                      ) : (
-                        <FormControlLabel
-                          onChange={() => handleChecked(todo.id, todo.checked)}
-                          control={<Checkbox />}
-                          label={todo.value}
-                        />
-                      )}
-                    </FormGroup> */}
                   </Box>
                   <Box sx={{ display: "inline-flex" }}>
                     <Button
@@ -138,14 +124,14 @@ const Todos = ({ todos, handleSetTodos }: Props) => {
                       Edit
                     </Button>
                     <>
+                    
                       {isEditing && (
                         <EditForm
                           setIsEditing={setIsEditing}
                           isEditing={isEditing}
-                          // todos={todos}
                           handleSetTodos={handleSetTodos}
-                          todos={[]}
                           todo={todo}
+                          todos={todos}
                         />
                       )}
                     </>
